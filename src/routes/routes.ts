@@ -1,7 +1,7 @@
 import SampleView from '../views/SampleView.vue'
 
 
-export const DATA_SOURCE_ROUTE = {
+export const DATABASE_SELECTION_ROUTE = {
   path: '/',
   component: SampleView,
   meta: {
@@ -32,7 +32,7 @@ const GENERIC_ROUTE = {
 
 
 export const routes = [
-  DATA_SOURCE_ROUTE,
+  DATABASE_SELECTION_ROUTE,
   DASHBOARD_ROUTE,
   ERROR_ROUTE,
   GENERIC_ROUTE
