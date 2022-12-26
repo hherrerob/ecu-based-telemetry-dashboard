@@ -1,6 +1,7 @@
 import { app, BrowserWindow, shell, ipcMain } from 'electron'
 import { release } from 'node:os'
 import { join } from 'node:path'
+import { EventManager } from './events'
 
 // The built directory structure
 //
@@ -74,7 +75,10 @@ async function createWindow() {
   })
 }
 
-app.whenReady().then(createWindow)
+app.whenReady().then(async () => {
+  await createWindow()
+  EventManager.loadEvents(ipcMain)
+})
 
 app.on('window-all-closed', () => {
   win = null

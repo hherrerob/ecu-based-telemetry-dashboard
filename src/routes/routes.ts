@@ -1,9 +1,10 @@
 import SampleView from '../views/SampleView.vue'
+import DatabaseSelectionView from '../views/DatabaseSelectionView.vue'
 
 
 export const DATABASE_SELECTION_ROUTE = {
   path: '/',
-  component: SampleView,
+  component: DatabaseSelectionView,
   meta: {
     titleKey: 'title.main'
   }

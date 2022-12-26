@@ -24,11 +24,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "bootstrap": "^5.2.3",
-    "bootstrap-vue-3": "^0.4.15"
+    "bootstrap-vue": "^2.23.1",
+    "reflect-metadata": "^0.1.13",
+    "sequelize": "^6.28.0",
+    "sequelize-typescript": "^2.1.5",
+    "sqlite3": "^5.1.4"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.0.0",
+    "bootstrap-vue-3": "^0.4.15",
     "electron": "^22.0.0",
     "electron-builder": "^23.6.0",
     "sass": "^1.57.1",
