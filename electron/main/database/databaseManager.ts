@@ -1,4 +1,16 @@
-import { Sequelize } from 'sequelize'
+import { Sequelize, Model } from 'sequelize-typescript'
+import {
+  Accelerometer,
+  EngineLoad, GPS,
+  Gyroscope,
+  Pitch,
+  RelativeThrottlePos,
+  Roll,
+  RPM,
+  Session,
+  Speed,
+  ThrottlePos
+} from './models'
 
 
 export namespace DatabaseManager {
@@ -16,15 +28,16 @@ export namespace DatabaseManager {
       this.db = new Sequelize({
         dialect: 'sqlite',
         storage: pathToDatabase,
-        dialectOptions: { mode: 2 }
+        dialectOptions: { mode: 2 },
+        define: {
+          freezeTableName: true,
+          timestamps: false
+        },
+        models: [Session, Accelerometer, Gyroscope, Pitch, Roll, EngineLoad, RelativeThrottlePos, RPM, Speed,
+          ThrottlePos, GPS]
       })
 
       await this.db.authenticate()
-
-      const [results, metadata] = await this.db.query("SELECT * FROM Accelerometer")
-
-      console.log(results)
-      console.log(metadata)
     }
   }
 
