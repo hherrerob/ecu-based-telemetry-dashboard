@@ -47,7 +47,7 @@ const SET_DATABASE_EVENT = 'set-database'
 
 const load = (): void => {
   show.value = true
-  ipcRenderer.invoke(SET_DATABASE_EVENT, [pathToDatabaseFile.value?.path])
+  ipcRenderer.invoke(SET_DATABASE_EVENT, [pathToDatabaseFile.value?.path, pathToDatabaseFile.value?.name])
       .then((wasDatabaseSet) => {
         if (wasDatabaseSet) {
           // goToDashboard()

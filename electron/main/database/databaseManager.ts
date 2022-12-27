@@ -1,4 +1,4 @@
-import { Sequelize, Model } from 'sequelize-typescript'
+import { Sequelize } from 'sequelize-typescript'
 import {
   Accelerometer,
   EngineLoad, GPS,
@@ -17,14 +17,21 @@ export namespace DatabaseManager {
   export interface IDatabaseManager {
     db: Sequelize,
     loadDatabase: Function
+    pathToDatabase: string
+    databaseName: string
   }
 
   class DatabaseManager implements IDatabaseManager {
     db: Sequelize
+    pathToDatabase: string
+    databaseName: string
 
     constructor () {}
 
-    async loadDatabase (pathToDatabase) {
+    async loadDatabase (pathToDatabase, databaseName) {
+      this.databaseName = databaseName
+      this.pathToDatabase = pathToDatabase.replace(databaseName, '')
+
       this.db = new Sequelize({
         dialect: 'sqlite',
         storage: pathToDatabase,
