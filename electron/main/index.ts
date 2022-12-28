@@ -1,7 +1,6 @@
 import { app, BrowserWindow, shell, ipcMain } from 'electron'
 import { release } from 'node:os'
 import { join } from 'node:path'
-import { EventManager } from './events'
 
 // The built directory structure
 //
@@ -41,7 +40,7 @@ const preload = join(__dirname, '../preload/index.js')
 const url = process.env.VITE_DEV_SERVER_URL
 const indexHtml = join(process.env.DIST, 'index.html')
 
-async function createWindow() {
+function createWindow() {
   win = new BrowserWindow({
     title: 'Main window',
     icon: join(process.env.PUBLIC, 'favicon.ico'),
@@ -80,10 +79,7 @@ async function createWindow() {
   win.show()
 }
 
-app.whenReady().then(async () => {
-  await createWindow()
-  EventManager.loadEvents(ipcMain)
-})
+app.whenReady().then(createWindow)
 
 app.on('window-all-closed', () => {
   win = null
