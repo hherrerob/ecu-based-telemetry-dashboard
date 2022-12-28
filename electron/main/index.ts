@@ -76,6 +76,7 @@ function createWindow() {
 
   // Open in full-screen
   win.maximize()
+  win.setMenuBarVisibility(false)
   win.show()
 }
 
