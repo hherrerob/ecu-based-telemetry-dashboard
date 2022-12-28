@@ -1,5 +1,6 @@
 import SampleView from '../views/SampleView.vue'
 import DatabaseSelectionView from '../views/DatabaseSelectionView.vue'
+import DashboardView from '../views/DashboardView.vue'
 
 
 export const DATABASE_SELECTION_ROUTE = {
@@ -12,7 +13,7 @@ export const DATABASE_SELECTION_ROUTE = {
 
 export const DASHBOARD_ROUTE = {
   path: '/dashboard',
-  component: SampleView,
+  component: DashboardView,
   meta: {
     titleKey: 'title.dashboard'
   }

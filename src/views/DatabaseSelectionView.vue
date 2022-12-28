@@ -50,7 +50,7 @@ const load = (): void => {
   ipcRenderer.invoke(SET_DATABASE_EVENT, [pathToDatabaseFile.value?.path, pathToDatabaseFile.value?.name])
       .then((wasDatabaseSet) => {
         if (wasDatabaseSet) {
-          // goToDashboard()
+          goToDashboard()
         } else {
           console.log(wasDatabaseSet)
         }

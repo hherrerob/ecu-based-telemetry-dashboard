@@ -19,12 +19,30 @@ export namespace DatabaseManager {
     loadDatabase: Function
     pathToDatabase: string
     databaseName: string
+    dataModels: any[]
+    dataModelsMap
   }
 
   class DatabaseManager implements IDatabaseManager {
     db: Sequelize
     pathToDatabase: string
     databaseName: string
+    dataModels: any[] = [
+        Accelerometer, Gyroscope, Pitch, Roll, EngineLoad, RelativeThrottlePos, RPM, Speed, ThrottlePos, GPS]
+
+    // TODO: Refactor this
+    dataModelsMap = {
+      'Accelerometer': Accelerometer,
+      'Gyroscope': Gyroscope,
+      'Pitch': Pitch,
+      'Roll': Roll,
+      'EngineLoad': EngineLoad,
+      'RelativeThrottlePos': RelativeThrottlePos,
+      'RPM': RPM,
+      'Speed': Speed,
+      'ThrottlePos': ThrottlePos,
+      'GPS': GPS,
+    }
 
     constructor () {}
 
@@ -40,8 +58,7 @@ export namespace DatabaseManager {
           freezeTableName: true,
           timestamps: false
         },
-        models: [Session, Accelerometer, Gyroscope, Pitch, Roll, EngineLoad, RelativeThrottlePos, RPM, Speed,
-          ThrottlePos, GPS]
+        models: [Session, ...this.dataModels]
       })
 
       await this.db.authenticate()
