@@ -29,7 +29,7 @@
 import { ipcRenderer } from "electron"
 import { Ref, ref } from 'vue'
 import { useRouter } from "vue-router"
-import { DASHBOARD_ROUTE } from '../routes/routes'
+import { DASHBOARD_ROUTE } from '../routes/constants'
 
 const show = ref(false)
 const router = useRouter()

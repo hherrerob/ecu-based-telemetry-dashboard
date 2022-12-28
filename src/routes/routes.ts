@@ -1,41 +1,33 @@
 import SampleView from '../views/SampleView.vue'
 import DatabaseSelectionView from '../views/DatabaseSelectionView.vue'
 import DashboardView from '../views/DashboardView.vue'
+import { DASHBOARD_ROUTE, DATABASE_SELECTION_ROUTE, ERROR_ROUTE } from './constants'
 
 
-export const DATABASE_SELECTION_ROUTE = {
-  path: '/',
+export const DATABASE_SELECTION_ROUTE_VIEW = {
+  path: DATABASE_SELECTION_ROUTE.path,
   component: DatabaseSelectionView,
-  meta: {
-    titleKey: 'title.main'
-  }
 }
 
-export const DASHBOARD_ROUTE = {
-  path: '/dashboard',
+export const DASHBOARD_ROUTE_VIEW = {
+  path: DASHBOARD_ROUTE.path,
   component: DashboardView,
-  meta: {
-    titleKey: 'title.dashboard'
-  }
 }
 
-export const ERROR_ROUTE = {
-  path: '/error',
+export const ERROR_ROUTE_VIEW = {
+  path: ERROR_ROUTE.path,
   component: SampleView,
-  meta: {
-    titleKey: 'title.error'
-  }
 }
 
-const GENERIC_ROUTE = {
+const GENERIC_ROUTE_VIEW = {
   path: '/:pathMatch(.*)*',
   redirect: '/'
 }
 
 
 export const routes = [
-  DATABASE_SELECTION_ROUTE,
-  DASHBOARD_ROUTE,
-  ERROR_ROUTE,
-  GENERIC_ROUTE
+  DATABASE_SELECTION_ROUTE_VIEW,
+  DASHBOARD_ROUTE_VIEW,
+  ERROR_ROUTE_VIEW,
+  GENERIC_ROUTE_VIEW
 ]
