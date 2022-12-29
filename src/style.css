@@ -23,6 +23,10 @@ body {
   min-height: 100vh;
 }
 
+p {
+  margin: 0;
+}
+
 #app {
   min-width: 100vw;
   min-height: 100vh;
