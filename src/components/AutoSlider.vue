@@ -46,6 +46,10 @@ const currentMs: Ref<number> = ref(0)
 let isPaused: Ref<boolean> = ref(true)
 let isBeingDragged = false
 
+const interval = setInterval(() => {
+  if (!isPaused.value && !isBeingDragged && currentMs.value < props.max) currentMs.value++
+}, 1)
+
 const playPause = () => {
   isPaused.value = !(isPaused.value)
 }
@@ -53,11 +57,8 @@ const playPause = () => {
 const reset = () => {
   isPaused.value = true
   currentMs.value = props.min
+  clearInterval(interval)
 }
-
-setInterval(() => {
-  if (!isPaused.value && !isBeingDragged) currentMs.value++
-}, 1)
 
 const onDrag = () => {
   isBeingDragged = true
