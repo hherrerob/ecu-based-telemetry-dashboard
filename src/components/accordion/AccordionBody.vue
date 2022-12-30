@@ -2,7 +2,7 @@
   <div :id="'accordion-item-collapse-' + target"
        class="accordion-collapse collapse"
        :aria-labelledby="'accordion-item-heading-' + target">
-    <div class="accordion-body">
+    <div class="accordion-body p-0">
       <slot />
     </div>
   </div>
