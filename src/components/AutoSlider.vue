@@ -29,11 +29,12 @@ import Slider from '@vueform/slider'
 import { computed, ref, Ref, watch } from 'vue'
 import { formatMsToReadableString } from '../composition/useFormatMsToReadableString'
 
-const emit = defineEmits(['tick'])
+const emit = defineEmits(['tick', 'change'])
 
 interface Props {
   min: number
   max: number
+  step: number
   disabled: boolean
 }
 const props = defineProps<Props>()
@@ -47,8 +48,9 @@ let isPaused: Ref<boolean> = ref(true)
 let isBeingDragged = false
 
 setInterval(() => {
-  if (!(isPaused.value) && !isBeingDragged && currentMs.value < props.max) currentMs.value++
-}, 1)
+  if (!(isPaused.value) && !isBeingDragged && currentMs.value < props.max)
+    currentMs.value += props.step
+}, props.step)
 
 const playPause = () => {
   isPaused.value = !(isPaused.value)
@@ -65,6 +67,7 @@ const onDrag = () => {
 
 const onChange = () => {
   isBeingDragged = false
+  emit('change', currentMs.value)
 }
 
 const onUpdate = () => {
