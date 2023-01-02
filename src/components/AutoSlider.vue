@@ -80,8 +80,12 @@ const formattedCurrentMs = computed(() => {
 </script>
 
 <style src="@vueform/slider/themes/default.css"></style>
-<style>
+<style lang="scss">
 .button-min-size {
   min-width: 38px;
+}
+
+.slider-connect {
+  background: #4d9eff;
 }
 </style>
