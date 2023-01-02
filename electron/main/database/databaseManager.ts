@@ -11,6 +11,7 @@ import {
   Speed,
   ThrottlePos
 } from './models'
+import Trace from './models/trace'
 
 
 export namespace DatabaseManager {
@@ -20,7 +21,6 @@ export namespace DatabaseManager {
     pathToDatabase: string
     databaseName: string
     dataModels: any[]
-    dataModelsMap
   }
 
   class DatabaseManager implements IDatabaseManager {
@@ -28,21 +28,7 @@ export namespace DatabaseManager {
     pathToDatabase: string
     databaseName: string
     dataModels: any[] = [
-        Accelerometer, Gyroscope, Pitch, Roll, EngineLoad, RelativeThrottlePos, RPM, Speed, ThrottlePos, GPS]
-
-    // TODO: Refactor this
-    dataModelsMap = {
-      'Accelerometer': Accelerometer,
-      'Gyroscope': Gyroscope,
-      'Pitch': Pitch,
-      'Roll': Roll,
-      'EngineLoad': EngineLoad,
-      'RelativeThrottlePos': RelativeThrottlePos,
-      'RPM': RPM,
-      'Speed': Speed,
-      'ThrottlePos': ThrottlePos,
-      'GPS': GPS,
-    }
+        Accelerometer, Gyroscope, Pitch, Roll, EngineLoad, RelativeThrottlePos, RPM, Speed, ThrottlePos]
 
     constructor () {}
 
@@ -58,7 +44,7 @@ export namespace DatabaseManager {
           freezeTableName: true,
           timestamps: false
         },
-        models: [Session, ...this.dataModels]
+        models: [Session, GPS, ...this.dataModels]
       })
 
       await this.db.authenticate()
