@@ -1,6 +1,8 @@
 import { DatabaseManager } from './databaseManager'
-import { Session } from './models'
+import { Accelerometer, Session } from './models'
 import { getSessionData, splitDataIntoChunks } from './utils'
+import validator from 'validator'
+import toDate = validator.toDate
 
 export async function loadDatabase (pathToDatabase, databaseName) {
   try {
@@ -14,7 +16,18 @@ export async function loadDatabase (pathToDatabase, databaseName) {
 }
 
 export async function getSessions() {
-  return await Session.findAll({raw: true})
+  const allSessions: any = await Session.findAll({raw: true})
+  let offset: number
+  for (const session of allSessions) {
+    offset = toDate(session.video_start_time).getTime()
+    session.end_time = await Accelerometer.max('received_time_utc', {
+      where: {session_id: session.id}
+    })
+    console.log(session.end_time)
+    session.end_time = session.end_time.getTime() - offset
+  }
+
+  return allSessions
 }
 
 export async function getTelemetryData(sessionId: number) {

@@ -12,7 +12,7 @@
           <b-col :cols="9">
             <AutoSlider
                 :min="0"
-                :max="10000"
+                :max="selectedSession?.end_time ?? 0"
                 :step="STEP"
                 :disabled="selectedSessionId === null"
                 @tick="onTick"
