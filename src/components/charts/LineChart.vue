@@ -11,7 +11,6 @@ interface Props {
   unitOfMeasure: string
   min: number
   max: number
-  colors?: string[]
   data: any[]
 }
 const props = defineProps<Props>()
@@ -26,6 +25,7 @@ const chartOptions = computed(() => {
       name: `chartName-${props.id}`,
       group: 'telemetry',
     },
+    colors: ['#4d9eff', '#ffdd00', '#44be2b', '#FD7014', '#FF0000'],
     xaxis: {
       labels: {
         formatter: formatMsToReadableString
