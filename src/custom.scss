@@ -1,0 +1,11 @@
+$main-color: #4d9eff;
+$gray-1: #eeeeee;
+$gray-2: #525252;
+$gray-3: #414141;
+$gray-4: #313131;
+
+$primary: $gray-4;
+$border-color: $main-color;
+
+// import to set changes
+@import "node_modules/bootstrap/scss/bootstrap";
