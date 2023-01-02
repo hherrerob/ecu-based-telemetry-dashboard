@@ -1,6 +1,7 @@
 import { app, BrowserWindow, shell, ipcMain } from 'electron'
 import { release } from 'node:os'
 import { join } from 'node:path'
+import { EventManager } from './events'
 
 // The built directory structure
 //
@@ -46,19 +47,17 @@ function createWindow() {
     icon: join(process.env.PUBLIC, 'favicon.ico'),
     show: false,
     webPreferences: {
-      preload,
       // Warning: Enable nodeIntegration and disable contextIsolation is not secure in production
-      // Consider using contextBridge.exposeInMainWorld
-      // Read more on https://www.electronjs.org/docs/latest/tutorial/context-isolation
       nodeIntegration: true,
       contextIsolation: false,
+      preload,
     },
   })
 
   if (process.env.VITE_DEV_SERVER_URL) { // electron-vite-vue#298
     win.loadURL(url)
     // Open devTool if the app is not packaged
-    win.webContents.openDevTools()
+    // win.webContents.openDevTools()
   } else {
     win.loadFile(indexHtml)
   }
@@ -80,7 +79,11 @@ function createWindow() {
   win.show()
 }
 
-app.whenReady().then(createWindow)
+// app.whenReady().then(createWindow)
+app.whenReady().then(() => {
+  createWindow()
+  EventManager.loadEvents(ipcMain)
+})
 
 app.on('window-all-closed', () => {
   win = null
