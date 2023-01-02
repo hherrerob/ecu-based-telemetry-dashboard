@@ -1,7 +1,6 @@
 import { createApp } from 'vue'
 import "./style.css"
 import App from './App.vue'
-import './samples/node-api'
 import { router } from './routes'
 import BootstrapVue3 from 'bootstrap-vue-3'
 import VueApexCharts from "vue3-apexcharts";
