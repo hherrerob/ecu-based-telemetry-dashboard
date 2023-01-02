@@ -14,8 +14,8 @@
 .dashboard-navbar {
   position: sticky;
   top: 0;
-  z-index: 1;
+  z-index: 3;
 
-  border-bottom: 1px solid red;
+  border-bottom: 1px solid #4d9eff;
 }
 </style>
