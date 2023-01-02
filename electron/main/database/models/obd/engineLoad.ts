@@ -8,7 +8,7 @@ export default class EngineLoad extends Trace {
 
     public static getName (): string {return 'Engine Load'}
 
-    public static getConfig (): TraceMetadata {
+    public static getMetadata (): TraceMetadata {
         return {unit: 'Percentage', min: 0, max: 100}
     }
 

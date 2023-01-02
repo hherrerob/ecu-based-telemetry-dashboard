@@ -14,7 +14,7 @@ export default class Gyroscope extends Trace {
 
     public static getName (): string {return 'Gyroscope'}
 
-    public static getConfig (): TraceMetadata {
+    public static getMetadata (): TraceMetadata {
         return {unit: 'Degrees/s', min: -2000, max: 2000}
     }
 

@@ -14,7 +14,7 @@ export default class Accelerometer extends Trace {
 
     public static getName (): string {return 'Accelerometer'}
 
-    public static getConfig (): TraceMetadata {
+    public static getMetadata (): TraceMetadata {
         return {unit: 'g/s', min: -16, max: 16}
     }
 

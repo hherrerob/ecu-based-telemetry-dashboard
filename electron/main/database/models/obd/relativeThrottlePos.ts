@@ -8,7 +8,7 @@ export default class RelativeThrottlePos extends Trace {
 
     public static getName (): string {return 'Relative Throttle Position'}
 
-    public static getConfig (): TraceMetadata {
+    public static getMetadata (): TraceMetadata {
         return {unit: 'Percentage', min: 0, max: 100}
     }
 

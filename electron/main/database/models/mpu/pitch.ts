@@ -8,7 +8,7 @@ export default class Pitch extends Trace {
 
     public static getName (): string {return 'Pitch'}
 
-    public static getConfig (): TraceMetadata {
+    public static getMetadata (): TraceMetadata {
         return {unit: 'Degrees', min: 0, max: 360}
     }
 

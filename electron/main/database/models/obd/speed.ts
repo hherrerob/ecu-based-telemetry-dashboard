@@ -8,7 +8,7 @@ export default class Speed extends Trace {
 
     public static getName (): string {return 'Speed'}
 
-    public static getConfig (): TraceMetadata {
+    public static getMetadata (): TraceMetadata {
         return {unit: 'Degrees', min: 0, max: 360}
     }
 
