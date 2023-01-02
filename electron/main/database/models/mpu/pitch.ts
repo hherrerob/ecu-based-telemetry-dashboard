@@ -5,4 +5,14 @@ import Trace from '../trace'
 export default class Pitch extends Trace {
     @Column(DataType.FLOAT)
     declare pitch: number
+
+    public static getName (): string {return 'Pitch'}
+
+    public static getConfig (): TraceMetadata {
+        return {unit: 'Degrees', min: 0, max: 360}
+    }
+
+    public static getFields (): string[] {
+        return ['pitch']
+    }
 }

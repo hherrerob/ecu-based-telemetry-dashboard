@@ -5,4 +5,14 @@ import Trace from '../trace'
 export default class Speed extends Trace {
     @Column(DataType.FLOAT)
     declare speed: number
+
+    public static getName (): string {return 'Speed'}
+
+    public static getConfig (): TraceMetadata {
+        return {unit: 'Degrees', min: 0, max: 360}
+    }
+
+    public static getFields (): string[] {
+        return ['speed']
+    }
 }

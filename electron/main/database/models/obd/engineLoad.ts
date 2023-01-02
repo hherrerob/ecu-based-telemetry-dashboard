@@ -5,4 +5,14 @@ import Trace from '../trace'
 export default class EngineLoad extends Trace {
     @Column(DataType.FLOAT)
     declare engine_load: number
+
+    public static getName (): string {return 'Engine Load'}
+
+    public static getConfig (): TraceMetadata {
+        return {unit: 'Percentage', min: 0, max: 100}
+    }
+
+    public static getFields (): string[] {
+        return ['engine_load']
+    }
 }

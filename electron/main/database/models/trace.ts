@@ -8,4 +8,8 @@ export default class Trace extends Model {
     @ForeignKey(() => Session)
     @Column(DataType.INTEGER)
     declare session_id
+
+    public static getName(): string {return 'Trace'}
+    public static getConfig(): TraceMetadata {return null}
+    public static getFields(): string[] {return []}
 }

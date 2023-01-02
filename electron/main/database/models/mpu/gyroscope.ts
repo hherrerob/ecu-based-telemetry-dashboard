@@ -11,4 +11,14 @@ export default class Gyroscope extends Trace {
 
     @Column(DataType.FLOAT)
     declare z_angular_speed: number
+
+    public static getName (): string {return 'Gyroscope'}
+
+    public static getConfig (): TraceMetadata {
+        return {unit: 'Degrees/s', min: -2000, max: 2000}
+    }
+
+    public static getFields (): string[] {
+        return ['x_angular_speed', 'y_angular_speed', 'z_angular_speed']
+    }
 }
