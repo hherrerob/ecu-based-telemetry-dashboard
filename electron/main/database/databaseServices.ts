@@ -1,6 +1,6 @@
 import { DatabaseManager } from './databaseManager'
-import { Accelerometer, Session } from './models'
-
+import { Session } from './models'
+import { getSessionData, splitDataIntoChunks } from './utils'
 
 export async function loadDatabase (pathToDatabase, databaseName) {
   try {
@@ -13,25 +13,31 @@ export async function loadDatabase (pathToDatabase, databaseName) {
   return true
 }
 
-export async function getData(modelName, sessionId) {
-  const modelsMap = DatabaseManager.getInstance().dataModelsMap
-  if (modelName in modelsMap) {
-    console.log(modelsMap[modelName])
-    const data = await Accelerometer.findAll({
-      raw: true,
-      where: {
-        session_id: sessionId
-      }
-    })
-
-    console.log(data)
-
-    return data
-  }
-
-  return []
-}
-
 export async function getSessions() {
   return await Session.findAll({raw: true})
+}
+
+export async function getTelemetryData(sessionId: number) {
+  const session = await Session.findByPk(sessionId)
+  const offset = session.video_start_time.getTime()
+  let rawData: any[]
+  const telemetryData = []
+
+  for (const model of DatabaseManager.getInstance().dataModels) {
+    rawData = await getSessionData(model, session)
+    if (!rawData.length) break
+
+    telemetryData.push({
+      name: model.getName(),
+      metadata: model.getMetadata(),
+      series: model.getFields().map((fieldName) => {
+        return {
+          name: fieldName,
+          data: splitDataIntoChunks(rawData, fieldName, offset)
+        }
+      })
+    })
+  }
+
+  return telemetryData
 }

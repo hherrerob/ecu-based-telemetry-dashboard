@@ -1,4 +1,4 @@
-import { getData, getSessions, loadDatabase } from './database/databaseServices'
+import { getSessions, getTelemetryData, loadDatabase } from './database/databaseServices'
 
 export namespace EventManager {
   export interface Event {
@@ -12,8 +12,8 @@ export namespace EventManager {
   }
 
   export const GET_DATA_EVENT: Event = {
-    name: 'get-data',
-    callback: getData
+    name: 'get-telemetry-data',
+    callback: getTelemetryData
   }
 
   export const GET_SESSIONS_EVENT: Event = {
