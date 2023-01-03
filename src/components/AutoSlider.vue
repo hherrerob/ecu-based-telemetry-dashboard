@@ -1,5 +1,9 @@
 <template>
   <div class="w-100 d-flex justify-content-evenly align-items-center">
+    <div class="px-1">
+      <slot />
+    </div>
+
     <b-button variant="dark"
               class="button-min-size"
               :disabled="disabled"

@@ -18,7 +18,16 @@
                 @play="onPlay"
                 @pause="onPause"
                 @tick="onTick"
-                @change="onChange" />
+                @change="onChange">
+
+              <b-button variant="dark"
+                        :disabled="selectedSessionId === null"
+                        :active="isPlayerInPictureInPicture"
+                        @click="togglePictureInPicture">
+                <i class="fa-regular fa-images" />
+
+              </b-button>
+            </AutoSlider>
           </b-col>
         </b-row>
       </b-container>
@@ -101,12 +110,17 @@ const onVideoPlayerMounted = ({player}: any) => {
   videoPlayer = player
 }
 
-const onPlay = () => {
-  videoPlayer.play()
-}
-
-const onPause = () => {
-  videoPlayer.pause()
+const onPlay = () => {videoPlayer.play()}
+const onPause = () => {videoPlayer.pause()}
+const isPlayerInPictureInPicture: Ref<Boolean> = ref(false)
+const togglePictureInPicture = () => {
+  if (videoPlayer.isInPictureInPicture()) {
+    videoPlayer.exitPictureInPicture()
+    isPlayerInPictureInPicture.value = false
+  } else {
+    videoPlayer.requestPictureInPicture()
+    isPlayerInPictureInPicture.value = true
+  }
 }
 
 let telemetryData: any[] = []
@@ -114,6 +128,10 @@ let dataToRender: Ref<Nullable<any>> = ref(null)
 
 watch(() => selectedSessionId.value, () => {
   dataToRender.value = null
+
+  if (isPlayerInPictureInPicture.value) videoPlayer.exitPictureInPicture()
+  isPlayerInPictureInPicture.value = false
+
   if (selectedSessionId.value) {
     getTelemetryData(selectedSessionId.value).then((data) => {
       telemetryData = data
