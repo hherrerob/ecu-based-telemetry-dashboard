@@ -15,6 +15,8 @@
                 :max="selectedSession?.end_time ?? 0"
                 :step="STEP"
                 :disabled="selectedSessionId === null"
+                @play="onPlay"
+                @pause="onPause"
                 @tick="onTick"
                 @change="onChange" />
           </b-col>
@@ -30,11 +32,12 @@
         <b-col :cols="7">
           <b-container class="border border-radius p-0" fluid>
             <b-aspect aspect="16:9">
-              <video-player
-                  :src="selectedSession.path_to_video"
+              <VideoPlayer
                   class="border-radius"
-                  controls
-                  fluid />
+                  :src="selectedSession.path_to_video"
+                  :controls="false"
+                  fluid
+                  @mounted="onVideoPlayerMounted" />
             </b-aspect>
           </b-container>
         </b-col>
@@ -77,6 +80,7 @@ import { NUMBER_OF_ITEMS_TO_KEEP_IN_MEMORY, STEP } from '../constants'
 import { cropLastItemsOfArray, prepareTelemetryDataForCharts } from '../composition/useTelemetryDataUtils'
 import { getSessions, getTelemetryData, setDatabase } from '../composition/useIpcCommunication'
 import { VideoPlayer } from '@videojs-player/vue'
+import { VideoJsPlayer } from 'video.js'
 
 const allSessions: Ref<any[]> = ref([])
 const selectedSessionId: Ref<Nullable<any>> = ref(null)
@@ -91,6 +95,19 @@ const sessionOptions = computed(() => {
     })
   ]
 })
+
+let videoPlayer: VideoJsPlayer
+const onVideoPlayerMounted = ({player}: any) => {
+  videoPlayer = player
+}
+
+const onPlay = () => {
+  videoPlayer.play()
+}
+
+const onPause = () => {
+  videoPlayer.pause()
+}
 
 let telemetryData: any[] = []
 let dataToRender: Ref<Nullable<any>> = ref(null)
@@ -107,8 +124,9 @@ watch(() => selectedSessionId.value, () => {
 
 const onTick = (currentMs: number) => {
   if (!selectedSession.value) return
-  const index = Math.floor(currentMs / STEP)
+  videoPlayer.currentTime(currentMs / 1000)
 
+  const index = Math.floor(currentMs / STEP)
   for (const t of telemetryData) {
     for (let i = 0; i < t.series.length; i++) {
       dataToRender.value[t.name][i].data = cropLastItemsOfArray(
@@ -125,10 +143,11 @@ const onTick = (currentMs: number) => {
 
 const onChange = (currentMs: number) => {
   dataToRender.value = prepareTelemetryDataForCharts(telemetryData)
+  videoPlayer.currentTime(currentMs / 1000)
 }
 
 onMounted(() => {
-  setDatabase('D:\\telemetry.db', 'telemetry.db')
+    setDatabase('D:\\telemetry.db', 'telemetry.db')
       .then((dbLoaded) => {
         console.log(dbLoaded)  // TODO: Remove
         getSessions().then((y) => {

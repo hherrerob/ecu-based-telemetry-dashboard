@@ -29,7 +29,7 @@ import Slider from '@vueform/slider'
 import { computed, ref, Ref, watch } from 'vue'
 import { formatMsToReadableString } from '../composition/useFormatMsToReadableString'
 
-const emit = defineEmits(['tick', 'change'])
+const emit = defineEmits(['play', 'pause', 'tick', 'change'])
 
 interface Props {
   min: number
@@ -54,6 +54,8 @@ setInterval(() => {
 
 const playPause = () => {
   isPaused.value = !(isPaused.value)
+
+  emit(isPaused.value ? 'pause' : 'play')
 }
 
 const reset = () => {

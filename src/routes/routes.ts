@@ -5,12 +5,12 @@ import { DASHBOARD_ROUTE, DATABASE_SELECTION_ROUTE, ERROR_ROUTE } from './consta
 
 
 export const DATABASE_SELECTION_ROUTE_VIEW = {
-  path: DATABASE_SELECTION_ROUTE.path,
+  path: '/ds', // DATABASE_SELECTION_ROUTE.path,
   component: DatabaseSelectionView,
 }
 
 export const DASHBOARD_ROUTE_VIEW = {
-  path: DASHBOARD_ROUTE.path,
+  path: '/', //DASHBOARD_ROUTE.path,
   component: DashboardView,
 }
 
