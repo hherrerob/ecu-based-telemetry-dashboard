@@ -26,19 +26,42 @@
         v-if="selectedSession && dataToRender !== null"
         class="mt-2"
         fluid>
-      <AccordionContainer>
-        <AccordionItem
-            v-for="(t, index) in telemetryData"
-            :title="t.name"
-            :target="index +1">
-          <LineChart
-              :id="index +1"
-              :min="t.metadata.min"
-              :max="t.metadata.max"
-              :unitOfMeasure="t.metadata.unit"
-              :data="dataToRender[t.name]" />
-        </AccordionItem>
-      </AccordionContainer>
+      <b-row>
+        <b-col :cols="7">
+          <b-container class="border border-radius p-0" fluid>
+            <b-aspect aspect="16:9">
+              <video-player
+                  :src="selectedSession.path_to_video"
+                  class="border-radius"
+                  controls
+                  fluid />
+            </b-aspect>
+          </b-container>
+        </b-col>
+
+        <b-col :cols="5">
+          <b-card>
+          </b-card>
+        </b-col>
+      </b-row>
+
+      <br>
+
+      <b-row>
+        <AccordionContainer>
+          <AccordionItem
+              v-for="(t, index) in telemetryData"
+              :title="t.name"
+              :target="index +1">
+            <LineChart
+                :id="index +1"
+                :min="t.metadata.min"
+                :max="t.metadata.max"
+                :unitOfMeasure="t.metadata.unit"
+                :data="dataToRender[t.name]" />
+          </AccordionItem>
+        </AccordionContainer>
+      </b-row>
     </b-container>
   </div>
 </template>
@@ -53,6 +76,7 @@ import LineChart from '../components/charts/LineChart.vue'
 import { NUMBER_OF_ITEMS_TO_KEEP_IN_MEMORY, STEP } from '../constants'
 import { cropLastItemsOfArray, prepareTelemetryDataForCharts } from '../composition/useTelemetryDataUtils'
 import { getSessions, getTelemetryData, setDatabase } from '../composition/useIpcCommunication'
+import { VideoPlayer } from '@videojs-player/vue'
 
 const allSessions: Ref<any[]> = ref([])
 const selectedSessionId: Ref<Nullable<any>> = ref(null)
@@ -113,3 +137,13 @@ onMounted(() => {
       })
 })
 </script>
+
+<style lang="scss">
+.border-radius {
+  border-radius: 5px;
+}
+
+video {
+  border-radius: 5px;
+}
+</style>

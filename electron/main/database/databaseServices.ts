@@ -3,6 +3,7 @@ import { Accelerometer, Session } from './models'
 import { getSessionData, splitDataIntoChunks } from './utils'
 import validator from 'validator'
 import toDate = validator.toDate
+import * as path from 'path'
 
 export async function loadDatabase (pathToDatabase, databaseName) {
   try {
@@ -23,8 +24,9 @@ export async function getSessions() {
     session.end_time = await Accelerometer.max('received_time_utc', {
       where: {session_id: session.id}
     })
-
     session.end_time = session.end_time.getTime() - offset
+    session.path_to_video = path.join(DatabaseManager.getInstance().pathToDatabase, 'recordings', session.path_to_video)
+    console.log(session.path_to_video)
   }
 
   return allSessions

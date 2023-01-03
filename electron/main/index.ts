@@ -50,6 +50,7 @@ function createWindow() {
       // Warning: Enable nodeIntegration and disable contextIsolation is not secure in production
       nodeIntegration: true,
       contextIsolation: false,
+      webSecurity: false,
       preload,
     },
   })
