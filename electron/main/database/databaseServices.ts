@@ -23,7 +23,7 @@ export async function getSessions() {
     session.end_time = await Accelerometer.max('received_time_utc', {
       where: {session_id: session.id}
     })
-    console.log(session.end_time)
+
     session.end_time = session.end_time.getTime() - offset
   }
 
