@@ -52,8 +52,11 @@
         </b-col>
 
         <b-col :cols="5">
-          <b-card>
-          </b-card>
+          <b-container class="h-100 border border-radius p-0" fluid>
+            <LiveMap
+                ref="liveMap"
+                :initialPosition="initialPosition" />
+          </b-container>
         </b-col>
       </b-row>
 
@@ -83,6 +86,7 @@ import { computed, onMounted, Ref, ref, watch } from 'vue'
 import AccordionContainer from '../components/accordion/AccordionContainer.vue'
 import AccordionItem from '../components/accordion/AccordionItem.vue'
 import Navbar from '../components/Navbar.vue'
+import LiveMap from '../components/map/LiveMap.vue'
 import AutoSlider from '../components/AutoSlider.vue'
 import LineChart from '../components/charts/LineChart.vue'
 import { NUMBER_OF_ITEMS_TO_KEEP_IN_MEMORY, STEP } from '../constants'
@@ -90,6 +94,8 @@ import { cropLastItemsOfArray, prepareTelemetryDataForCharts } from '../composit
 import { getSessions, getTelemetryData, setDatabase } from '../composition/useIpcCommunication'
 import { VideoPlayer } from '@videojs-player/vue'
 import { VideoJsPlayer } from 'video.js'
+import LiveMapManager from '../components/map'
+import { LatLngExpression } from 'leaflet'
 
 const allSessions: Ref<any[]> = ref([])
 const selectedSessionId: Ref<Nullable<any>> = ref(null)
@@ -109,6 +115,9 @@ let videoPlayer: VideoJsPlayer
 const onVideoPlayerMounted = ({player}: any) => {
   videoPlayer = player
 }
+
+const initialPosition: LatLngExpression = [40.602018, -6.530945]
+const liveMap = ref(null)
 
 const onPlay = () => {videoPlayer.play()}
 const onPause = () => {videoPlayer.pause()}
@@ -142,7 +151,7 @@ watch(() => selectedSessionId.value, () => {
 
 const onTick = (currentMs: number) => {
   if (!selectedSession.value) return
-  videoPlayer.currentTime(currentMs / 1000)
+  //videoPlayer.currentTime(currentMs / 1000)
 
   const index = Math.floor(currentMs / STEP)
   for (const t of telemetryData) {
