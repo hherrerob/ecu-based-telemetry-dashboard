@@ -40,14 +40,12 @@
       <b-row>
         <b-col :cols="7">
           <b-container class="border border-radius p-0" fluid>
-            <b-aspect aspect="16:9">
-              <VideoPlayer
+            <VideoPlayer
                   class="border-radius"
                   :src="selectedSession.path_to_video"
                   :controls="false"
                   fluid
                   @mounted="onVideoPlayerMounted" />
-            </b-aspect>
           </b-container>
         </b-col>
 
