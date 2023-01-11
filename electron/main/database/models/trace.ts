@@ -10,6 +10,6 @@ export default class Trace extends Model {
     declare session_id
 
     public static getName(): string {return 'Trace'}
-    public static getConfig(): TraceMetadata {return null}
+    public static getMetadata(): TraceMetadata {return null}
     public static getFields(): string[] {return []}
 }
