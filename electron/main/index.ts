@@ -43,7 +43,7 @@ const indexHtml = join(process.env.DIST, 'index.html')
 
 function createWindow() {
   win = new BrowserWindow({
-    title: 'Main window',
+    title: 'ECU-Based Telemetry Dashboard',
     icon: join(process.env.PUBLIC, 'favicon.ico'), // #4d9eff
     show: false,
     webPreferences: {
