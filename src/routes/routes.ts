@@ -1,4 +1,4 @@
-import SampleView from '../views/SampleView.vue'
+import ErrorView from '../views/ErrorView.vue'
 import DatabaseSelectionView from '../views/DatabaseSelectionView.vue'
 import DashboardView from '../views/DashboardView.vue'
 import { DASHBOARD_ROUTE, DATABASE_SELECTION_ROUTE, ERROR_ROUTE } from './constants'
@@ -16,7 +16,7 @@ export const DASHBOARD_ROUTE_VIEW = {
 
 export const ERROR_ROUTE_VIEW = {
   path: ERROR_ROUTE.path,
-  component: SampleView,
+  component: ErrorView,
 }
 
 const GENERIC_ROUTE_VIEW = {
