@@ -4,6 +4,7 @@ import { getSessionData, splitDataIntoChunks } from './utils'
 import validator from 'validator'
 import toDate = validator.toDate
 import * as path from 'path'
+import * as fs from 'fs'
 
 export async function loadDatabase (pathToDatabase, databaseName) {
     try {
@@ -12,6 +13,16 @@ export async function loadDatabase (pathToDatabase, databaseName) {
         console.log(e)
         return false
     }
+
+    return true
+}
+
+export async function purgeDatabase (pathToDatabase, databaseName) {
+    const basePath = pathToDatabase.replace(databaseName, '')
+    const recordingsPath = path.join(basePath, 'recordings')
+
+    fs.unlink(pathToDatabase, () => {})
+    fs.rmSync(recordingsPath, { recursive: true, force: true })
 
     return true
 }
