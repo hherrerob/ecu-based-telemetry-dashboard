@@ -62,17 +62,19 @@
 
       <b-row>
         <AccordionContainer>
-          <AccordionItem
-              v-for="(t, index) in telemetryData"
-              :title="t.name"
-              :target="index +1">
-            <LineChart
-                :id="index +1"
-                :min="t.metadata.min"
-                :max="t.metadata.max"
-                :unitOfMeasure="t.metadata.unit"
-                :data="dataToRender[t.name]" />
-          </AccordionItem>
+          <template v-for="(t, index) in telemetryData">
+            <AccordionItem
+                v-if="t.metadata !== null"
+                :title="t.name"
+                :target="index +1">
+              <LineChart
+                  :id="index +1"
+                  :min="t.metadata.min"
+                  :max="t.metadata.max"
+                  :unitOfMeasure="t.metadata.unit"
+                  :data="dataToRender[t.name]" />
+            </AccordionItem>
+          </template>
         </AccordionContainer>
       </b-row>
     </b-container>
@@ -147,6 +149,21 @@ watch(() => selectedSessionId.value, () => {
   }
 })
 
+const doStep = (index: number) => {
+  doStepMap(index)
+}
+
+const doStepMap = (index: number) => {
+  const gpsData = telemetryData.find((t) => t.name === 'GPS')
+
+  if (gpsData === null || gpsData === undefined || !(index in gpsData?.series))
+    return
+
+  for (const trace of gpsData.series[index]) {
+    liveMap.value.move(trace)
+  }
+}
+
 const onTick = (currentMs: number) => {
   if (!selectedSession.value) return
   //videoPlayer.currentTime(currentMs / 1000)
@@ -164,6 +181,8 @@ const onTick = (currentMs: number) => {
       }
     }
   }
+
+  doStep(index)
 }
 
 const onChange = (currentMs: number) => {
