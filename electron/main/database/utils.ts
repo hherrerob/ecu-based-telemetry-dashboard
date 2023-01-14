@@ -23,10 +23,14 @@ export function splitDataIntoChunks(rawData: any[], fieldName: string, timeOffse
 
         if (!(index in dataChunks)) dataChunks[index] = []
 
-        dataChunks[index].push({
-            y: trace[fieldName],
-            x: timeWithOffset,
-        })
+        if (fieldName === null) {
+            dataChunks[index].push([trace['latitude'], trace['longitude']])
+        } else {
+            dataChunks[index].push({
+                y: trace[fieldName],
+                x: timeWithOffset,
+            })
+        }
     }
 
     return dataChunks
