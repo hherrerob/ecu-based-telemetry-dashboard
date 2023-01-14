@@ -2,14 +2,14 @@ import L, { LatLngExpression, Map, Marker, Polyline } from 'leaflet'
 
 export default class LiveMapManager {
     map: Map
-    currentPositionMarker: Marker
-    route: Polyline
+    currentPositionMarker: Nullable<Marker>
+    route: Nullable<Polyline>
     
     public constructor (initialPosition: LatLngExpression) {
         this.map = L.map('map').setView(initialPosition, 17)
         this.getTileLayer().addTo(this.map)
-        this.currentPositionMarker = this.createMarker(initialPosition).addTo(this.map)
-        this.route = this.initializeRoute(initialPosition).addTo(this.map)
+        this.currentPositionMarker = null
+        this.route = null
     }
     
     public getIcon() {
@@ -35,6 +35,14 @@ export default class LiveMapManager {
     }
 
     public move (moveTo: LatLngExpression) {
+        if (this.currentPositionMarker === null) {
+            this.currentPositionMarker = this.createMarker(moveTo).addTo(this.map)
+        }
+
+        if (this.route === null) {
+            this.route = this.initializeRoute(moveTo).addTo(this.map)
+        }
+
         this.currentPositionMarker.setLatLng(moveTo)
         this.route.addLatLng(moveTo)
         this.map.setView(moveTo)
