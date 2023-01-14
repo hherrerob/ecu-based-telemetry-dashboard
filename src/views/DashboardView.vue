@@ -94,7 +94,6 @@ import { cropLastItemsOfArray, prepareTelemetryDataForCharts } from '../composit
 import { getSessions, getTelemetryData, setDatabase } from '../composition/useIpcCommunication'
 import { VideoPlayer } from '@videojs-player/vue'
 import { VideoJsPlayer } from 'video.js'
-import LiveMapManager from '../components/map'
 import { LatLngExpression } from 'leaflet'
 
 const allSessions: Ref<any[]> = ref([])
@@ -117,7 +116,7 @@ const onVideoPlayerMounted = ({player}: any) => {
 }
 
 const initialPosition: LatLngExpression = [40.602018, -6.530945]
-const liveMap = ref(null)
+const liveMap: any = ref(null)
 
 const onPlay = () => {videoPlayer.play()}
 const onPause = () => {videoPlayer.pause()}
@@ -150,25 +149,11 @@ watch(() => selectedSessionId.value, () => {
 })
 
 const doStep = (index: number) => {
-  doStepMap(index)
+  doTelemetryStep(index)
+  doMapStep(index)
 }
 
-const doStepMap = (index: number) => {
-  const gpsData = telemetryData.find((t) => t.name === 'GPS')
-
-  if (gpsData === null || gpsData === undefined || !(index in gpsData?.series))
-    return
-
-  for (const trace of gpsData.series[index]) {
-    liveMap.value.move(trace)
-  }
-}
-
-const onTick = (currentMs: number) => {
-  if (!selectedSession.value) return
-  //videoPlayer.currentTime(currentMs / 1000)
-
-  const index = Math.floor(currentMs / STEP)
+const doTelemetryStep = (index: number) => {
   for (const t of telemetryData) {
     for (let i = 0; i < t.series.length; i++) {
       dataToRender.value[t.name][i].data = cropLastItemsOfArray(
@@ -181,6 +166,23 @@ const onTick = (currentMs: number) => {
       }
     }
   }
+}
+
+const doMapStep = (index: number) => {
+  const gpsData = telemetryData.find((t) => t.name === 'GPS')
+
+  if (gpsData === null || gpsData === undefined || !(index in gpsData?.series))
+    return
+
+  for (const trace of gpsData.series[index]) {
+    liveMap.value.move(trace)
+  }
+}
+
+const onTick = (currentMs: number) => {
+  if (!selectedSession.value) return
+
+  const index = Math.floor(currentMs / STEP)
 
   doStep(index)
 }
