@@ -9,7 +9,7 @@ export default class Speed extends Trace {
     public static getName (): string {return 'Speed'}
 
     public static getMetadata (): TraceMetadata {
-        return {unit: 'Degrees', min: 0, max: 360}
+        return {unit: 'km/h', min: 0, max: 300}
     }
 
     public static getFields (): string[] {

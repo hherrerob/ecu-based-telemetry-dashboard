@@ -8,7 +8,7 @@ export default class ThrottlePos extends Trace {
     public static getName (): string {return 'Throttle Position'}
 
     public static getMetadata (): TraceMetadata {
-        return {unit: 'Degrees', min: 0, max: 360}
+        return {unit: 'Percentage', min: 0, max: 100}
     }
     public static getFields(): string[] {
         return ['throttle_pos']

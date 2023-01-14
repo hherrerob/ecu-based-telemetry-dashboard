@@ -11,8 +11,6 @@ import {
   Speed,
   ThrottlePos
 } from './models'
-import Trace from './models/trace'
-
 
 export namespace DatabaseManager {
   export interface IDatabaseManager {
