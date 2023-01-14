@@ -91,7 +91,7 @@ import AutoSlider from '../components/AutoSlider.vue'
 import LineChart from '../components/charts/LineChart.vue'
 import { NUMBER_OF_ITEMS_TO_KEEP_IN_MEMORY, STEP } from '../constants'
 import { cropLastItemsOfArray, prepareTelemetryDataForCharts } from '../composition/useTelemetryDataUtils'
-import { getSessions, getTelemetryData, setDatabase } from '../composition/useIpcCommunication'
+import { getSessions, getTelemetryData } from '../composition/useIpcCommunication'
 import { VideoPlayer } from '@videojs-player/vue'
 import { VideoJsPlayer } from 'video.js'
 import { LatLngExpression } from 'leaflet'
@@ -193,13 +193,9 @@ const onChange = (currentMs: number) => {
 }
 
 onMounted(() => {
-    setDatabase('D:\\telemetry.db', 'telemetry.db')
-      .then((dbLoaded) => {
-        console.log(dbLoaded)  // TODO: Remove
-        getSessions().then((y) => {
-          allSessions.value = y
-        })
-      })
+  getSessions().then((sessions) => {
+    allSessions.value = sessions
+  })
 })
 </script>
 
