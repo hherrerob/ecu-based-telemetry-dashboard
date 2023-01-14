@@ -26,7 +26,7 @@ export namespace DatabaseManager {
     pathToDatabase: string
     databaseName: string
     dataModels: any[] = [
-        Accelerometer, Gyroscope, Pitch, Roll, EngineLoad, RelativeThrottlePos, RPM, Speed, ThrottlePos]
+        Accelerometer, Gyroscope, Pitch, Roll, EngineLoad, RelativeThrottlePos, RPM, Speed, ThrottlePos, GPS]
 
     constructor () {}
 
@@ -42,7 +42,7 @@ export namespace DatabaseManager {
           freezeTableName: true,
           timestamps: false
         },
-        models: [Session, GPS, ...this.dataModels]
+        models: [Session, ...this.dataModels]
       })
 
       await this.db.authenticate()
